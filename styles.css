@@ -1,0 +1,194 @@
+/* Custom Styles */
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* Navigation Styles */
+.nav-link.active {
+    color: #3b82f6 !important;
+    font-weight: 600;
+}
+
+/* Profile Image Animation */
+.profile-image-container {
+    position: relative;
+    overflow: hidden;
+}
+
+.profile-image-container::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #3b82f6, #f97316, #3b82f6);
+    border-radius: 50%;
+    z-index: -1;
+    animation: rotate 3s linear infinite;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.profile-image-container:hover::before {
+    opacity: 1;
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Skill Bar Animations */
+.skill-bar {
+    width: 0%;
+    transition: width 1.5s ease-out 0.5s;
+}
+
+.skill-bar.animate {
+    width: var(--target-width);
+}
+
+/* Timeline Styles */
+.timeline-item:hover .timeline-item > div > div {
+    transform: translateY(-4px);
+}
+
+/* Form Styles */
+.form-group input:focus,
+.form-group textarea:focus {
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.form-group input.error,
+.form-group textarea.error {
+    border-color: #ef4444;
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+.form-group input.success,
+.form-group textarea.success {
+    border-color: #10b981;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+/* Modal Styles */
+.modal {
+    backdrop-filter: blur(4px);
+}
+
+.modal-content {
+    animation: scaleIn 0.3s ease-out;
+    max-height: 90vh;
+}
+
+@keyframes scaleIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Loading States */
+.loading-spinner {
+    display: inline-block;
+}
+
+/* Intersection Observer Classes */
+.fade-in-element {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.fade-in-element.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Parallax Effect */
+.parallax-bg {
+    will-change: transform;
+}
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+    .timeline-item {
+        margin-left: 2rem;
+    }
+    
+    .modal-content {
+        margin: 1rem;
+        max-height: calc(100vh - 2rem);
+    }
+}
+
+/* Performance Optimizations */
+.project-card,
+.timeline-item > div > div,
+.social-link {
+    will-change: transform;
+}
+
+/* Accessibility Improvements */
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+    
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Focus States */
+.nav-link:focus,
+button:focus,
+a:focus,
+input:focus,
+textarea:focus {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+    .gradient-text {
+        background: none;
+        color: #000;
+    }
+    
+    .bg-gradient-to-br {
+        background: #fff;
+    }
+}
+
+/* Print Styles */
+@media print {
+    nav,
+    #contact,
+    footer {
+        display: none;
+    }
+    
+    section {
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+}

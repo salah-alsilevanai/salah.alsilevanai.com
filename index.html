@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Salah Hasan Ali Alsilevanai - IT Management Graduate, Full Stack Developer, AI Integration, and Cross-Cultural Teamwork."
+    />
+    <meta
+      name="keywords"
+      content="Salah Alsilevanai, IT Management, Full Stack Developer, AI, Portfolio, JavaScript, Python, React, Next.js, Duhok"
+    />
+    <meta name="author" content="Salah Hasan Ali Alsilevanai" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://salah-alsilevanai.github.io" />
+    <meta property="og:title" content="Salah Hasan Ali Alsilevanai - Full Stack Developer" />
+    <meta
+      property="og:description"
+      content="Recent Information Technology Management graduate with comprehensive expertise in full-stack development, AI integration, and cross-cultural teamwork."
+    />
+    <meta property="og:image" content="./assets/images/og-image.jpg" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://salah-alsilevanai.github.io" />
+    <meta property="twitter:title" content="Salah Hasan Ali Alsilevanai - Full Stack Developer" />
+    <meta
+      property="twitter:description"
+      content="Recent Information Technology Management graduate with comprehensive expertise in full-stack development, AI integration, and cross-cultural teamwork."
+    />
+    <meta property="twitter:image" content="./assets/images/og-image.jpg" />
+
+    <title>Salah Hasan Ali Alsilevanai - IT Management Graduate & Full Stack Developer</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="./assets/icons/favicon.svg" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              inter: ["Inter", "system-ui", "sans-serif"],
+            },
+            colors: {
+              primary: {
+                50: "#eff6ff",
+                100: "#dbeafe",
+                500: "#3b82f6",
+                600: "#2563eb",
+                700: "#1d4ed8",
+              },
+              accent: {
+                500: "#f97316",
+                600: "#ea580c",
+              },
+            },
+            animation: {
+              float: "float 3s ease-in-out infinite",
+              "pulse-slow": "pulse 3s ease-in-out infinite",
+              "fade-in": "fadeIn 0.6s ease-out forwards",
+              "slide-up": "slideUp 0.6s ease-out forwards",
+              "scale-in": "scaleIn 0.6s ease-out forwards",
+            },
+            keyframes: {
+              float: {
+                "0%, 100%": { transform: "translateY(0px)" },
+                "50%": { transform: "translateY(-10px)" },
+              },
+              fadeIn: {
+                "0%": { opacity: "0" },
+                "100%": { opacity: "1" },
+              },
+              slideUp: {
+                "0%": { opacity: "0", transform: "translateY(30px)" },
+                "100%": { opacity: "1", transform: "translateY(0)" },
+              },
+              scaleIn: {
+                "0%": { opacity: "0", transform: "scale(0.9)" },
+                "100%": { opacity: "1", transform: "scale(1)" },
+              },
+            },
+          },
+        },
+      };
+    </script>
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body class="font-inter text-gray-900 bg-white">
+    <!-- Navigation -->
+    <nav
+      class="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-200 transition-all duration-300"
+      id="navbar"
+    >
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+          <!-- Logo -->
+          <div class="flex-shrink-0">
+            <a
+              href="#hero"
+              class="text-2xl font-bold text-primary-600 hover:text-primary-700 transition-colors"
+            >
+              SA
+            </a>
+          </div>
+
+          <!-- Desktop Navigation -->
+          <div class="hidden md:block">
+            <div class="ml-10 flex items-baseline space-x-8">
+              <a
+                href="#hero"
+                class="nav-link text-gray-700 hover:text-primary-600 px-3 py-2 text-sm font-medium transition-colors"
+                >Home</a
+              >
+              <a
+                href="#about"
+                class="nav-link text-gray-700 hover:text-primary-600 px-3 py-2 text-sm font-medium transition-colors"
+                >About</a
+              >
+              <a
+                href="#projects"
+                class="nav-link text-gray-700 hover:text-primary-600 px-3 py-2 text-sm font-medium transition-colors"
+                >Projects</a
+              >
+              <a
+                href="#experience"
+                class="nav-link text-gray-700 hover:text-primary-600 px-3 py-2 text-sm font-medium transition-colors"
+                >Experience</a
+              >
+              <a
+                href="#contact"
+                class="nav-link text-gray-700 hover:text-primary-600 px-3 py-2 text-sm font-medium transition-colors"
+                >Contact</a
+              >
+            </div>
+          </div>
+
+          <!-- Mobile menu button -->
+          <div class="md:hidden">
+            <button
+              type="button"
+              class="mobile-menu-button text-gray-700 hover:text-primary-600 focus:outline-none focus:text-primary-600 transition-colors"
+              aria-label="Toggle mobile menu"
+            >
+              <svg
+                class="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile Navigation Menu -->
+      <div
+        class="mobile-menu hidden md:hidden bg-white border-t border-gray-200"
+      >
+        <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+          <a
+            href="#hero"
+            class="nav-link block text-gray-700 hover:text-primary-600 px-3 py-2 text-base font-medium transition-colors"
+            >Home</a
+          >
+          <a
+            href="#about"
+            class="nav-link block text-gray-700 hover:text-primary-600 px-3 py-2 text-base font-medium transition-colors"
+            >About</a
+          >
+          <a
+            href="#projects"
+            class="nav-link block text-gray-700 hover:text-primary-600 px-3 py-2 text-base font-medium transition-colors"
+            >Projects</a
+          >
+          <a
+            href="#experience"
+            class="nav-link block text-gray-700 hover:text-primary-600 px-3 py-2 text-base font-medium transition-colors"
+            >Experience</a
+          >
+          <a
+            href="#contact"
+            class="nav-link block text-gray-700 hover:text-primary-600 px-3 py-2 text-base font-medium transition-colors"
+            >Contact</a
+          >
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section
+      id="hero"
+      class="min-h-screen flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-primary-50 via-white to-primary-50"
+    >
+      <div
+        class="absolute inset-0 bg-gradient-to-br from-primary-600/5 via-transparent to-accent-500/5"
+      ></div>
+      <div
+        class="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto"
+      >
+        <div class="space-y-8">
+          <div class="opacity-0 animate-fade-in" style="animation-delay: 0.2s">
+            <h1
+              class="text-4xl sm:text-6xl lg:text-7xl font-bold text-gray-900 leading-tight"
+            >
+              Hi, I'm
+              <span
+                class="text-transparent bg-clip-text bg-gradient-to-r from-primary-600 to-accent-500"
+                >Salah Hasan Ali Alsilevanai</span
+              >
+            </h1>
+          </div>
+          <div class="opacity-0 animate-fade-in" style="animation-delay: 0.4s">
+            <p class="text-xl sm:text-2xl text-gray-600 max-w-3xl mx-auto">
+              Recent IT Management graduate | Full Stack Developer | AI
+              Integration | Cross-Cultural Teamwork | Duhok, Iraq
+            </p>
+          </div>
+          <div class="opacity-0 animate-fade-in" style="animation-delay: 0.6s">
+            <div
+              class="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6"
+            >
+              <a
+                href="#projects"
+                class="bg-primary-600 hover:bg-primary-700 text-white px-8 py-4 rounded-full font-medium transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
+              >
+                View My Work
+              </a>
+              <a
+                href="#contact"
+                class="border-2 border-primary-600 text-primary-600 hover:bg-primary-600 hover:text-white px-8 py-4 rounded-full font-medium transition-all duration-300 hover:scale-105"
+              >
+                Get In Touch
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Floating CTA Arrow -->
+      <div
+        class="absolute bottom-8 left-1/2 transform -translate-x-1/2 opacity-0 animate-fade-in animate-float"
+        style="animation-delay: 1s"
+      >
+        <a
+          href="#about"
+          class="block text-primary-600 hover:text-primary-700 transition-colors"
+          aria-label="Scroll to about section"
+        >
+          <svg
+            class="w-8 h-8 animate-pulse-slow"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M19 14l-7 7m0 0l-7-7m7 7V3"
+            ></path>
+          </svg>
+        </a>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-16 lg:py-24 bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+          <h2
+            class="text-3xl sm:text-4xl font-bold text-gray-900 mb-4 fade-in-element"
+          >
+            About Me
+          </h2>
+          <div
+            class="w-24 h-1 bg-gradient-to-r from-primary-600 to-accent-500 mx-auto fade-in-element"
+          ></div>
+        </div>
+
+        <div
+          class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center"
+        >
+          <!-- Profile Image -->
+          <div class="text-center lg:text-left fade-in-element">
+            <div class="inline-block relative">
+              <div
+                class="w-64 h-64 sm:w-80 sm:h-80 mx-auto lg:mx-0 rounded-full overflow-hidden border-4 border-primary-100 profile-image-container"
+              >
+                <img
+                  src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&dpr=1"
+                  alt="Salah Hasan Ali Alsilevanai - Full Stack Developer"
+                  class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- About Content -->
+          <div class="space-y-8 fade-in-element">
+            <div class="space-y-6">
+              <p class="text-lg text-gray-600 leading-relaxed">
+                Recent Information Technology Management graduate with
+                comprehensive expertise in full-stack development, AI
+                integration, and cross-cultural teamwork. Proven track record of
+                leading innovative projects, including AI-powered nutrition
+                management and sustainable 3D prototype design, recognized in
+                competitive expos and global challenges.
+              </p>
+              <p class="text-lg text-gray-600 leading-relaxed">
+                Skilled in modern web technologies, programming languages, and
+                data analysis frameworks, with strong foundations in
+                cybersecurity, networking, and project management. Trilingual,
+                fast learner, and adept at adapting to dynamic environments,
+                eager to contribute technical skills and entrepreneurial
+                mindset to forward-thinking teams.
+              </p>
+            </div>
+
+            <!-- Skills Grid -->
+            <div class="space-y-6">
+              <h3 class="text-2xl font-semibold text-gray-900">
+                Technical Skills
+              </h3>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div class="skill-item space-y-2">
+                  <div class="flex justify-between items-center">
+                    <span class="text-sm font-medium text-gray-700"
+                      >Python, JavaScript/TypeScript</span
+                    >
+                  </div>
+                </div>
+
+                <div class="skill-item space-y-2">
+                  <div class="flex justify-between items-center">
+                    <span class="text-sm font-medium text-gray-700"
+                      >React 18, Next.js 14</span
+                    >
+                  </div>
+                </div>
+
+                <div class="skill-item space-y-2">
+                  <div class="flex justify-between items-center">
+                    <span class="text-sm font-medium text-gray-700"
+                      >Java, C++, C#, SQL, PHP</span
+                    >
+                  </div>
+                </div>
+
+                <div class="skill-item space-y-2">
+                  <div class="flex justify-between items-center">
+                    <span class="text-sm font-medium text-gray-700"
+                      >AI Integration (Google Gemini)</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-16 lg:py-24 bg-gray-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+          <h2
+            class="text-3xl sm:text-4xl font-bold text-gray-900 mb-4 fade-in-element"
+          >
+            Featured Projects
+          </h2>
+          <div
+            class="w-24 h-1 bg-gradient-to-r from-primary-600 to-accent-500 mx-auto fade-in-element"
+          ></div>
+          <p
+            class="text-lg text-gray-600 mt-6 max-w-2xl mx-auto fade-in-element"
+          >
+            Here are some of my recent projects that showcase my skills and
+            experience
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <!-- Project 1 -->
+          <div
+            class="project-card bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 fade-in-element"
+          >
+            <div class="p-6">
+              <h3 class="text-xl font-semibold text-gray-900 mb-2">
+                Lead Developer - NutrAI
+              </h3>
+              <p class="text-gray-600 mb-4">
+                AI-powered web app for personalized nutrition, meal planning,
+                image-based ingredient detection, and grocery budgeting.
+              </p>
+              <div class="flex flex-wrap gap-2 mb-4">
+                <span
+                  class="px-3 py-1 bg-primary-100 text-primary-700 rounded-full text-sm"
+                  >Next.js 14</span
+                >
+                <span
+                  class="px-3 py-1 bg-primary-100 text-primary-700 rounded-full text-sm"
+                  >React 18</span
+                >
+                <span
+                  class="px-3 py-1 bg-primary-100 text-primary-700 rounded-full text-sm"
+                  >Gemini AI</span
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 2 -->
+          <div
+            class="project-card bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 fade-in-element"
+          >
+            <div class="p-6">
+              <h3 class="text-xl font-semibold text-gray-900 mb-2">
+                Share4Life - Donation Web Platform
+              </h3>
+              <p class="text-gray-600 mb-4">
+                A web application to facilitate donations to individuals in
+                need.
+              </p>
+              <div class="flex flex-wrap gap-2 mb-4">
+                <span
+                  class="px-3 py-1 bg-accent-100 text-accent-700 rounded-full text-sm"
+                  >Hackathon Project</span
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 3 -->
+          <div
+            class="project-card bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 fade-in-element"
+          >
+            <div class="p-6">
+              <h3 class="text-xl font-semibold text-gray-900 mb-2">
+                3D Prototype Developer - Wind Turbine
+              </h3>
+              <p class="text-gray-600 mb-4">
+                Designed a wind turbine using SketchUp as part of a
+                sustainability-focused solution.
+              </p>
+              <div class="flex flex-wrap gap-2 mb-4">
+                <span
+                  class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm"
+                  >SketchUp</span
+                >
+                <span
+                  class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm"
+                  >3rd Place</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="py-16 lg:py-24 bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+          <h2
+            class="text-3xl sm:text-4xl font-bold text-gray-900 mb-4 fade-in-element"
+          >
+            Experience
+          </h2>
+          <div
+            class="w-24 h-1 bg-gradient-to-r from-primary-600 to-accent-500 mx-auto fade-in-element"
+          ></div>
+        </div>
+
+        <div class="relative">
+          <!-- Timeline Line -->
+          <div
+            class="absolute left-4 md:left-1/2 transform md:-translate-x-1/2 w-0.5 h-full bg-gray-300"
+          ></div>
+
+          <div class="space-y-12">
+            <!-- Experience Item 1 -->
+            <div
+              class="timeline-item relative flex items-center fade-in-element"
+            >
+              <div
+                class="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-primary-600 rounded-full border-4 border-white shadow-lg"
+              ></div>
+              <div
+                class="md:hidden absolute left-4 transform -translate-x-1/2 w-4 h-4 bg-primary-600 rounded-full border-4 border-white shadow-lg"
+              ></div>
+
+              <div class="ml-12 md:ml-0 md:w-1/2 md:pr-8 md:text-right">
+                <div
+                  class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
+                >
+                  <div class="text-sm text-primary-600 font-medium mb-2">
+                    May 2025
+                  </div>
+                  <h3 class="text-xl font-semibold text-gray-900 mb-2">
+                    Graphic Designer (Freelance)
+                  </h3>
+                  <div class="text-gray-600 mb-4">Local Business, Duhok</div>
+                  <p class="text-gray-600">
+                    Designed business cards and branding materials using
+                    Illustrator and Photoshop.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Experience Item 2 -->
+            <div
+              class="timeline-item relative flex items-center fade-in-element"
+            >
+              <div
+                class="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-accent-500 rounded-full border-4 border-white shadow-lg"
+              ></div>
+              <div
+                class="md:hidden absolute left-4 transform -translate-x-1/2 w-4 h-4 bg-accent-500 rounded-full border-4 border-white shadow-lg"
+              ></div>
+
+              <div class="ml-12 md:ml-0 md:w-1/2 md:ml-auto md:pl-8">
+                <div
+                  class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
+                >
+                  <div class="text-sm text-accent-500 font-medium mb-2">
+                    Feb 2025
+                  </div>
+                  <h3 class="text-xl font-semibold text-gray-900 mb-2">
+                    IT Support Technician (Freelance)
+                  </h3>
+                  <div class="text-gray-600 mb-4">
+                    Asli Burak Restaurant, Duhok
+                  </div>
+                  <p class="text-gray-600">
+                    Diagnosed and repaired POS systems, including printer
+                    troubleshooting and hardware replacements.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Experience Item 3 -->
+            <div
+              class="timeline-item relative flex items-center fade-in-element"
+            >
+              <div
+                class="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-green-500 rounded-full border-4 border-white shadow-lg"
+              ></div>
+              <div
+                class="md:hidden absolute left-4 transform -translate-x-1/2 w-4 h-4 bg-green-500 rounded-full border-4 border-white shadow-lg"
+              ></div>
+
+              <div class="ml-12 md:ml-0 md:w-1/2 md:pr-8 md:text-right">
+                <div
+                  class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
+                >
+                  <div class="text-sm text-green-500 font-medium mb-2">
+                    Sep 2024 – Nov 2024
+                  </div>
+                  <h3 class="text-xl font-semibold text-gray-900 mb-2">
+                    Restaurant Captain
+                  </h3>
+                  <div class="text-gray-600 mb-4">Sultan Alsham, Duhok</div>
+                  <p class="text-gray-600">
+                    Supervised service staff and managed floor operations during
+                    peak hours.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-16 lg:py-24 bg-gray-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+          <h2
+            class="text-3xl sm:text-4xl font-bold text-gray-900 mb-4 fade-in-element"
+          >
+            Get In Touch
+          </h2>
+          <div
+            class="w-24 h-1 bg-gradient-to-r from-primary-600 to-accent-500 mx-auto fade-in-element"
+          ></div>
+          <p
+            class="text-lg text-gray-600 mt-6 max-w-2xl mx-auto fade-in-element"
+          >
+            I'm always interested in new opportunities and interesting projects.
+            Let's connect!
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          <!-- Contact Form -->
+          <div class="fade-in-element">
+            <form id="contact-form" class="space-y-6" novalidate>
+              <div class="form-group">
+                <label
+                  for="name"
+                  class="block text-sm font-medium text-gray-700 mb-2"
+                  >Name</label
+                >
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  required
+                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-300"
+                  placeholder="Your full name"
+                />
+                <div
+                  class="error-message text-red-500 text-sm mt-1 hidden"
+                ></div>
+              </div>
+
+              <div class="form-group">
+                <label
+                  for="email"
+                  class="block text-sm font-medium text-gray-700 mb-2"
+                  >Email</label
+                >
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  required
+                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-300"
+                  placeholder="your.email@example.com"
+                />
+                <div
+                  class="error-message text-red-500 text-sm mt-1 hidden"
+                ></div>
+              </div>
+
+              <div class="form-group">
+                <label
+                  for="subject"
+                  class="block text-sm font-medium text-gray-700 mb-2"
+                  >Subject</label
+                >
+                <input
+                  type="text"
+                  id="subject"
+                  name="subject"
+                  required
+                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-300"
+                  placeholder="What's this about?"
+                />
+                <div
+                  class="error-message text-red-500 text-sm mt-1 hidden"
+                ></div>
+              </div>
+
+              <div class="form-group">
+                <label
+                  for="message"
+                  class="block text-sm font-medium text-gray-700 mb-2"
+                  >Message</label
+                >
+                <textarea
+                  id="message"
+                  name="message"
+                  rows="5"
+                  required
+                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-300 resize-none"
+                  placeholder="Tell me about your project or idea..."
+                ></textarea>
+                <div
+                  class="error-message text-red-500 text-sm mt-1 hidden"
+                ></div>
+              </div>
+
+              <button
+                type="submit"
+                class="w-full bg-primary-600 hover:bg-primary-700 text-white font-medium py-3 px-6 rounded-lg transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <span class="button-text">Send Message</span>
+                <span class="loading-spinner hidden">
+                  <svg
+                    class="animate-spin h-5 w-5 mx-auto"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      class="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      stroke-width="4"
+                    ></circle>
+                    <path
+                      class="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    ></path>
+                  </svg>
+                </span>
+              </button>
+
+              <div id="form-message" class="hidden p-4 rounded-lg"></div>
+            </form>
+          </div>
+
+          <!-- Contact Info -->
+          <div class="space-y-8 fade-in-element">
+            <div>
+              <h3 class="text-2xl font-semibold text-gray-900 mb-6">
+                Let's Connect
+              </h3>
+              <div class="space-y-4">
+                <div class="flex items-center space-x-4">
+                  <div
+                    class="flex-shrink-0 w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center"
+                  >
+                    <svg
+                      class="w-6 h-6 text-primary-600"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                      ></path>
+                    </svg>
+                  </div>
+                  <div>
+                    <div class="text-sm text-gray-500">Email</div>
+                    <div class="text-gray-900 font-medium">
+                      salah.alsilevanai@gmail.com
+                    </div>
+                  </div>
+                </div>
+
+                <div class="flex items-center space-x-4">
+                  <div
+                    class="flex-shrink-0 w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center"
+                  >
+                    <svg
+                      class="w-6 h-6 text-primary-600"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                      ></path>
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                      ></path>
+                    </svg>
+                  </div>
+                  <div>
+                    <div class="text-sm text-gray-500">Location</div>
+                    <div class="text-gray-900 font-medium">
+                      Sumel, Duhok, Iraq
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Social Links -->
+            <div>
+              <h4 class="text-lg font-semibold text-gray-900 mb-4">
+                Follow Me
+              </h4>
+              <div class="flex space-x-4">
+                <a
+                  href="https://github.com/salah-alsilevanai"
+                  class="social-link w-12 h-12 bg-gray-800 hover:bg-gray-900 text-white rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110"
+                  aria-label="GitHub"
+                >
+                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path
+                      d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
+                    />
+                  </svg>
+                </a>
+              </div>
+            </div>
+
+            <!-- Resume Download -->
+            <div>
+              <a
+                href="./assets/documents/resume.pdf"
+                download
+                class="inline-flex items-center space-x-2 bg-accent-500 hover:bg-accent-600 text-white px-6 py-3 rounded-lg font-medium transition-all duration-300 hover:scale-105"
+              >
+                <svg
+                  class="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 10v6m0 0l-3-3m3 3l3-3M3 17V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2z"
+                  ></path>
+                </svg>
+                <span>Download Resume</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center">
+          <div class="text-2xl font-bold mb-4">Salah Hasan Ali Alsilevanai</div>
+          <p class="text-gray-400 mb-6">
+            IT Management Graduate & Full Stack Developer
+          </p>
+          <div class="flex justify-center space-x-6 mb-8">
+            <a
+              href="https://github.com/salah-alsilevanai"
+              class="text-gray-400 hover:text-white transition-colors"
+            >
+              <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                <path
+                  d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
+                />
+              </svg>
+            </a>
+          </div>
+          <div class="border-t border-gray-800 pt-8">
+            <p class="text-gray-400 text-sm">
+              © 2025 Salah Hasan Ali Alsilevanai. All rights reserved.
+            </p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Project Modal -->
+    <div
+      id="project-modal"
+      class="modal fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 p-4"
+    >
+      <div
+        class="modal-content bg-white rounded-xl max-w-2xl w-full max-h-screen overflow-y-auto"
+      >
+        <div class="p-6">
+          <div class="flex justify-between items-start mb-6">
+            <h3 id="modal-title" class="text-2xl font-bold text-gray-900"></h3>
+            <button
+              class="modal-close text-gray-400 hover:text-gray-600 transition-colors"
+            >
+              <svg
+                class="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M6 18L18 6M6 6l12 12"
+                ></path>
+              </svg>
+            </button>
+          </div>
+          <div id="modal-content">
+            <!-- Dynamic content will be inserted here -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="./main.js"></script>
+  </body>
+</html>
