@@ -162,6 +162,15 @@ class PortfolioApp {
         }
       }, 250)
     );
+
+    window.addEventListener("scroll", function () {
+      const bg = document.querySelector("#hero > div.absolute");
+      if (window.scrollY > 0) {
+        bg.classList.add("blurred-bg");
+      } else {
+        bg.classList.remove("blurred-bg");
+      }
+    });
   }
 
   setupIntersectionObserver() {
@@ -239,38 +248,36 @@ class PortfolioApp {
   }
 
   setupHeroBlur() {
-    const heroSection = document.getElementById("hero");
-    if (!heroSection) return;
-
-    const heroContent = heroSection.querySelector(".relative.z-10"); // Target the content container
-
-    window.addEventListener(
-      "scroll",
-      this.debounce(() => {
-        const heroHeight = heroSection.offsetHeight;
-        const scrollPosition = window.scrollY;
-
-        if (scrollPosition > heroHeight / 4) {
-          // Start blurring when scrolled 1/4 of hero height
-          const blurAmount =
-            Math.min((scrollPosition - heroHeight / 4) / (heroHeight / 2), 1) *
-            10; // Max blur 10px
-          if (heroContent) {
-            heroContent.style.filter = `blur(${blurAmount}px)`;
-            heroContent.style.opacity = `${1 - Math.min(blurAmount / 10, 0.7)}`; // Fade out content slightly
-          }
-          heroSection.classList.add("hero-blurred");
-        } else {
-          if (heroContent) {
-            heroContent.style.filter = "blur(0px)";
-            heroContent.style.opacity = "1";
-          }
-          heroSection.classList.remove("hero-blurred");
-          // Reset parallax transform when de-blurred if needed
-          // heroSection.style.transform = `translateY(${window.pageYOffset * 0.5}px)`;
-        }
-      }, 10)
-    );
+    // Remove all blur logic to prevent jump
+    // const heroSection = document.getElementById("hero");
+    // if (!heroSection) return;
+    // const heroContent = heroSection.querySelector(".relative.z-10");
+    // window.addEventListener(
+    //   "scroll",
+    //   this.debounce(() => {
+    //     const heroHeight = heroSection.offsetHeight;
+    //     const scrollPosition = window.scrollY;
+    //     if (scrollPosition > heroHeight / 4) {
+    //       const blurAmount = Math.min((scrollPosition - heroHeight / 4) / (heroHeight / 2), 1) * 10;
+    //       if (heroContent) {
+    //         heroContent.style.filter = `blur(${blurAmount}px)`;
+    //         heroContent.style.opacity = `${1 - Math.min(blurAmount / 10, 0.7)}`;
+    //       }
+    //       heroSection.classList.add("hero-blurred");
+    //     } else {
+    //       if (heroContent) {
+    //         heroContent.style.filter = "blur(0px)";
+    //         heroContent.style.opacity = "1";
+    //       }
+    //       heroSection.classList.remove("hero-blurred");
+    //     }
+    //   }, 10)
+    // );
+    const heroContent = document.querySelector("#hero .relative.z-10");
+    if (heroContent) {
+      heroContent.style.filter = "";
+      heroContent.style.opacity = "";
+    }
   }
 
   toggleMobileMenu() {
@@ -633,11 +640,14 @@ if ("serviceWorker" in navigator) {
 if ("PerformanceObserver" in window) {
   const observer = new PerformanceObserver((list) => {
     list.getEntries().forEach((entry) => {
-      if (entry.entryType === "largest-contentful-paint") {
-        console.log("LCP:", entry.startTime);
+      if (entry.entryType === "navigation") {
+        console.log("Navigation Timing:", entry);
+      } else if (entry.entryType === "resource") {
+        console.log("Resource Timing:", entry);
       }
     });
   });
 
-  observer.observe({ entryTypes: ["largest-contentful-paint"] });
+  observer.observe({ type: "navigation", buffered: true });
+  observer.observe({ type: "resource", buffered: true });
 }

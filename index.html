@@ -224,7 +224,7 @@
     <!-- Hero Section -->
     <section
       id="hero"
-      class="min-h-screen flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-primary-50 via-white to-primary-50"
+      class="min-h-screen flex items-center justify-center relative bg-gradient-to-br from-primary-50 via-white to-primary-50"
     >
       <div
         class="absolute inset-0 bg-gradient-to-br from-primary-600/5 via-transparent to-accent-500/5"
@@ -269,7 +269,6 @@
               <a
                 href="booking.html"
                 class="border-2 border-accent-500 text-accent-500 hover:bg-accent-500 hover:text-white px-8 py-4 rounded-full font-medium transition-all duration-300 hover:scale-105"
-                style="margin-top: 0"
               >
                 Book a Meeting
               </a>
@@ -306,8 +305,18 @@
     </section>
 
     <!-- About Section -->
-    <section id="about" class="py-16 lg:py-24 bg-white">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section
+      id="about"
+      class="py-16 lg:py-24 bg-white relative overflow-hidden"
+    >
+      <!-- Blurred background layer -->
+      <div
+        class="absolute inset-0 z-0 bg-gradient-to-br from-primary-100 via-white to-accent-100 backdrop-blur-md"
+        style="filter: blur(16px)"
+        aria-hidden="true"
+      ></div>
+
+      <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-16">
           <h2
             class="text-3xl sm:text-4xl font-bold text-gray-900 mb-4 fade-in-element"

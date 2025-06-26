@@ -207,3 +207,10 @@ textarea:focus {
     page-break-inside: avoid;
   }
 }
+
+/* Remove or comment out any blur-related rules */
+.hero-blurred,
+.blurred-bg {
+  /* filter: blur(12px); */
+  /* transition: filter 0.3s; */
+}
