@@ -1,549 +1,643 @@
 // Portfolio Website JavaScript
 class PortfolioApp {
-    constructor() {
-        this.init();
-        this.bindEvents();
-        this.setupIntersectionObserver();
-        this.setupScrollEffects();
+  constructor() {
+    this.init();
+    this.bindEvents();
+    this.setupIntersectionObserver();
+    this.setupScrollEffects();
+    this.setupHeroBlur();
+  }
+
+  init() {
+    // Initialize application
+    this.mobileMenuOpen = false;
+    this.currentSection = "hero";
+    this.isScrolling = false;
+
+    // Debounce scroll handler
+    this.debouncedScrollHandler = this.debounce(
+      this.handleScroll.bind(this),
+      10
+    );
+
+    // Project data
+    this.projectData = {
+      project1: {
+        title: "E-commerce Platform",
+        description:
+          "A comprehensive e-commerce solution built with modern web technologies. Features include user authentication, product catalog, shopping cart, payment processing, and admin dashboard.",
+        technologies: ["React", "Node.js", "MongoDB", "Stripe API", "AWS S3"],
+        features: [
+          "Responsive design for all devices",
+          "Secure payment integration with Stripe",
+          "Real-time inventory management",
+          "Advanced search and filtering",
+          "Order tracking and history",
+        ],
+        challenges:
+          "Implementing real-time inventory updates and handling high traffic loads during peak shopping periods.",
+        outcome:
+          "Increased client sales by 40% and improved user satisfaction scores by 35%.",
+      },
+      project2: {
+        title: "Task Management App",
+        description:
+          "A collaborative task management application designed for remote teams. Built with Vue.js and Firebase, featuring real-time updates and team collaboration tools.",
+        technologies: ["Vue.js", "Firebase", "WebSocket", "Vuex", "CSS Grid"],
+        features: [
+          "Real-time collaborative editing",
+          "Drag-and-drop task management",
+          "Team chat and notifications",
+          "Time tracking and reporting",
+          "Mobile-responsive design",
+        ],
+        challenges:
+          "Implementing real-time synchronization across multiple users and handling offline functionality.",
+        outcome:
+          "Adopted by 15+ companies and improved team productivity by 25%.",
+      },
+      project3: {
+        title: "Analytics Dashboard",
+        description:
+          "An interactive data visualization dashboard for business intelligence. Features advanced charts, filtering capabilities, and data export functionality.",
+        technologies: ["D3.js", "Python", "PostgreSQL", "Flask", "Chart.js"],
+        features: [
+          "Interactive data visualizations",
+          "Real-time data updates",
+          "Advanced filtering and search",
+          "Export to PDF and Excel",
+          "Custom report generation",
+        ],
+        challenges:
+          "Processing large datasets efficiently and creating intuitive data visualizations.",
+        outcome:
+          "Reduced report generation time by 60% and improved decision-making processes.",
+      },
+    };
+  }
+
+  bindEvents() {
+    // Mobile menu toggle
+    const mobileMenuButton = document.querySelector(".mobile-menu-button");
+    const mobileMenu = document.querySelector(".mobile-menu");
+
+    if (mobileMenuButton && mobileMenu) {
+      mobileMenuButton.addEventListener("click", () => {
+        this.toggleMobileMenu();
+      });
     }
 
-    init() {
-        // Initialize application
-        this.mobileMenuOpen = false;
-        this.currentSection = 'hero';
-        this.isScrolling = false;
-        
-        // Debounce scroll handler
-        this.debouncedScrollHandler = this.debounce(this.handleScroll.bind(this), 10);
-        
-        // Project data
-        this.projectData = {
-            project1: {
-                title: 'E-commerce Platform',
-                description: 'A comprehensive e-commerce solution built with modern web technologies. Features include user authentication, product catalog, shopping cart, payment processing, and admin dashboard.',
-                technologies: ['React', 'Node.js', 'MongoDB', 'Stripe API', 'AWS S3'],
-                features: [
-                    'Responsive design for all devices',
-                    'Secure payment integration with Stripe',
-                    'Real-time inventory management',
-                    'Advanced search and filtering',
-                    'Order tracking and history'
-                ],
-                challenges: 'Implementing real-time inventory updates and handling high traffic loads during peak shopping periods.',
-                outcome: 'Increased client sales by 40% and improved user satisfaction scores by 35%.'
-            },
-            project2: {
-                title: 'Task Management App',
-                description: 'A collaborative task management application designed for remote teams. Built with Vue.js and Firebase, featuring real-time updates and team collaboration tools.',
-                technologies: ['Vue.js', 'Firebase', 'WebSocket', 'Vuex', 'CSS Grid'],
-                features: [
-                    'Real-time collaborative editing',
-                    'Drag-and-drop task management',
-                    'Team chat and notifications',
-                    'Time tracking and reporting',
-                    'Mobile-responsive design'
-                ],
-                challenges: 'Implementing real-time synchronization across multiple users and handling offline functionality.',
-                outcome: 'Adopted by 15+ companies and improved team productivity by 25%.'
-            },
-            project3: {
-                title: 'Analytics Dashboard',
-                description: 'An interactive data visualization dashboard for business intelligence. Features advanced charts, filtering capabilities, and data export functionality.',
-                technologies: ['D3.js', 'Python', 'PostgreSQL', 'Flask', 'Chart.js'],
-                features: [
-                    'Interactive data visualizations',
-                    'Real-time data updates',
-                    'Advanced filtering and search',
-                    'Export to PDF and Excel',
-                    'Custom report generation'
-                ],
-                challenges: 'Processing large datasets efficiently and creating intuitive data visualizations.',
-                outcome: 'Reduced report generation time by 60% and improved decision-making processes.'
-            }
-        };
-    }
+    // Navigation links
+    const navLinks = document.querySelectorAll(".nav-link");
+    navLinks.forEach((link) => {
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+        const targetId = link.getAttribute("href").substring(1);
+        this.scrollToSection(targetId);
 
-    bindEvents() {
-        // Mobile menu toggle
-        const mobileMenuButton = document.querySelector('.mobile-menu-button');
-        const mobileMenu = document.querySelector('.mobile-menu');
-        
-        if (mobileMenuButton && mobileMenu) {
-            mobileMenuButton.addEventListener('click', () => {
-                this.toggleMobileMenu();
-            });
+        // Close mobile menu if open
+        if (this.mobileMenuOpen) {
+          this.toggleMobileMenu();
         }
+      });
+    });
 
-        // Navigation links
-        const navLinks = document.querySelectorAll('.nav-link');
-        navLinks.forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const targetId = link.getAttribute('href').substring(1);
-                this.scrollToSection(targetId);
-                
-                // Close mobile menu if open
-                if (this.mobileMenuOpen) {
-                    this.toggleMobileMenu();
-                }
-            });
+    // Contact form
+    const contactForm = document.getElementById("contact-form");
+    if (contactForm) {
+      contactForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        this.handleFormSubmission(e);
+      });
+
+      // Real-time validation
+      const formInputs = contactForm.querySelectorAll("input, textarea");
+      formInputs.forEach((input) => {
+        input.addEventListener("blur", () => this.validateField(input));
+        input.addEventListener("input", () => this.clearFieldError(input));
+      });
+    }
+
+    // Project modal
+    const projectDetailButtons = document.querySelectorAll(
+      ".project-details-btn"
+    );
+    projectDetailButtons.forEach((button) => {
+      button.addEventListener("click", (e) => {
+        const projectId = e.target.getAttribute("data-project");
+        this.openProjectModal(projectId);
+      });
+    });
+
+    const modal = document.getElementById("project-modal");
+    const modalClose = document.querySelector(".modal-close");
+
+    if (modal && modalClose) {
+      modalClose.addEventListener("click", () => this.closeProjectModal());
+      modal.addEventListener("click", (e) => {
+        if (e.target === modal) {
+          this.closeProjectModal();
+        }
+      });
+    }
+
+    // Scroll events
+    window.addEventListener("scroll", this.debouncedScrollHandler, {
+      passive: true,
+    });
+
+    // Keyboard navigation
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        this.closeProjectModal();
+      }
+    });
+
+    // Resize events
+    window.addEventListener(
+      "resize",
+      this.debounce(() => {
+        if (window.innerWidth > 768 && this.mobileMenuOpen) {
+          this.toggleMobileMenu();
+        }
+      }, 250)
+    );
+  }
+
+  setupIntersectionObserver() {
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: "-10% 0px -10% 0px",
+    };
+
+    // Observer for fade-in animations
+    const fadeObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+
+          // Animate skill bars when about section is visible
+          if (entry.target.id === "about") {
+            this.animateSkillBars();
+          }
+        }
+      });
+    }, observerOptions);
+
+    // Observe all fade-in elements
+    const fadeElements = document.querySelectorAll(".fade-in-element");
+    fadeElements.forEach((el) => fadeObserver.observe(el));
+
+    // Observer for navigation highlighting
+    const navObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            this.updateActiveNavigation(entry.target.id);
+          }
         });
+      },
+      {
+        threshold: 0.5,
+        rootMargin: "-20% 0px -20% 0px",
+      }
+    );
 
-        // Contact form
-        const contactForm = document.getElementById('contact-form');
-        if (contactForm) {
-            contactForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                this.handleFormSubmission(e);
+    // Observe all sections
+    const sections = document.querySelectorAll("section[id]");
+    sections.forEach((section) => navObserver.observe(section));
+  }
+
+  setupScrollEffects() {
+    // Parallax effect for hero section
+    const hero = document.getElementById("hero");
+    if (hero) {
+      window.addEventListener(
+        "scroll",
+        () => {
+          if (!this.isScrolling) {
+            requestAnimationFrame(() => {
+              const scrolled = window.pageYOffset;
+              const parallaxSpeed = 0.5;
+              // Apply parallax only if hero is not blurred
+              if (!hero.classList.contains("hero-blurred")) {
+                hero.style.transform = `translateY(${
+                  scrolled * parallaxSpeed
+                }px)`;
+              } else {
+                // Reset transform when blurred to prevent jitter
+                hero.style.transform = "translateY(0)";
+              }
+              this.isScrolling = false;
             });
-            
-            // Real-time validation
-            const formInputs = contactForm.querySelectorAll('input, textarea');
-            formInputs.forEach(input => {
-                input.addEventListener('blur', () => this.validateField(input));
-                input.addEventListener('input', () => this.clearFieldError(input));
-            });
-        }
-
-        // Project modal
-        const projectDetailButtons = document.querySelectorAll('.project-details-btn');
-        projectDetailButtons.forEach(button => {
-            button.addEventListener('click', (e) => {
-                const projectId = e.target.getAttribute('data-project');
-                this.openProjectModal(projectId);
-            });
-        });
-
-        const modal = document.getElementById('project-modal');
-        const modalClose = document.querySelector('.modal-close');
-        
-        if (modal && modalClose) {
-            modalClose.addEventListener('click', () => this.closeProjectModal());
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) {
-                    this.closeProjectModal();
-                }
-            });
-        }
-
-        // Scroll events
-        window.addEventListener('scroll', this.debouncedScrollHandler, { passive: true });
-        
-        // Keyboard navigation
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                this.closeProjectModal();
-            }
-        });
-
-        // Resize events
-        window.addEventListener('resize', this.debounce(() => {
-            if (window.innerWidth > 768 && this.mobileMenuOpen) {
-                this.toggleMobileMenu();
-            }
-        }, 250));
+            this.isScrolling = true;
+          }
+        },
+        { passive: true }
+      );
     }
+  }
 
-    setupIntersectionObserver() {
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '-10% 0px -10% 0px'
-        };
+  setupHeroBlur() {
+    const heroSection = document.getElementById("hero");
+    if (!heroSection) return;
 
-        // Observer for fade-in animations
-        const fadeObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    
-                    // Animate skill bars when about section is visible
-                    if (entry.target.id === 'about') {
-                        this.animateSkillBars();
-                    }
-                }
-            });
-        }, observerOptions);
+    const heroContent = heroSection.querySelector(".relative.z-10"); // Target the content container
 
-        // Observe all fade-in elements
-        const fadeElements = document.querySelectorAll('.fade-in-element');
-        fadeElements.forEach(el => fadeObserver.observe(el));
+    window.addEventListener(
+      "scroll",
+      this.debounce(() => {
+        const heroHeight = heroSection.offsetHeight;
+        const scrollPosition = window.scrollY;
 
-        // Observer for navigation highlighting
-        const navObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    this.updateActiveNavigation(entry.target.id);
-                }
-            });
-        }, {
-            threshold: 0.5,
-            rootMargin: '-20% 0px -20% 0px'
-        });
-
-        // Observe all sections
-        const sections = document.querySelectorAll('section[id]');
-        sections.forEach(section => navObserver.observe(section));
-    }
-
-    setupScrollEffects() {
-        // Parallax effect for hero section
-        const hero = document.getElementById('hero');
-        if (hero) {
-            window.addEventListener('scroll', () => {
-                if (!this.isScrolling) {
-                    requestAnimationFrame(() => {
-                        const scrolled = window.pageYOffset;
-                        const parallaxSpeed = 0.5;
-                        hero.style.transform = `translateY(${scrolled * parallaxSpeed}px)`;
-                        this.isScrolling = false;
-                    });
-                    this.isScrolling = true;
-                }
-            }, { passive: true });
-        }
-    }
-
-    toggleMobileMenu() {
-        const mobileMenu = document.querySelector('.mobile-menu');
-        const mobileMenuButton = document.querySelector('.mobile-menu-button');
-        
-        if (mobileMenu && mobileMenuButton) {
-            this.mobileMenuOpen = !this.mobileMenuOpen;
-            
-            if (this.mobileMenuOpen) {
-                mobileMenu.classList.remove('hidden');
-                mobileMenuButton.setAttribute('aria-expanded', 'true');
-                // Animate menu items
-                const menuItems = mobileMenu.querySelectorAll('a');
-                menuItems.forEach((item, index) => {
-                    item.style.opacity = '0';
-                    item.style.transform = 'translateY(-10px)';
-                    setTimeout(() => {
-                        item.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
-                        item.style.opacity = '1';
-                        item.style.transform = 'translateY(0)';
-                    }, index * 50);
-                });
-            } else {
-                mobileMenu.classList.add('hidden');
-                mobileMenuButton.setAttribute('aria-expanded', 'false');
-            }
-        }
-    }
-
-    scrollToSection(sectionId) {
-        const section = document.getElementById(sectionId);
-        if (section) {
-            const headerHeight = document.querySelector('nav').offsetHeight;
-            const sectionTop = section.offsetTop - headerHeight;
-            
-            window.scrollTo({
-                top: sectionTop,
-                behavior: 'smooth'
-            });
-        }
-    }
-
-    handleScroll() {
-        const navbar = document.getElementById('navbar');
-        if (navbar) {
-            if (window.scrollY > 50) {
-                navbar.classList.add('bg-white/95');
-                navbar.classList.remove('bg-white/90');
-            } else {
-                navbar.classList.add('bg-white/90');
-                navbar.classList.remove('bg-white/95');
-            }
-        }
-    }
-
-    updateActiveNavigation(sectionId) {
-        if (this.currentSection !== sectionId) {
-            this.currentSection = sectionId;
-            
-            // Update navigation links
-            const navLinks = document.querySelectorAll('.nav-link');
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === `#${sectionId}`) {
-                    link.classList.add('active');
-                }
-            });
-        }
-    }
-
-    animateSkillBars() {
-        const skillBars = document.querySelectorAll('.skill-bar');
-        skillBars.forEach(bar => {
-            const targetWidth = bar.getAttribute('data-width') + '%';
-            bar.style.setProperty('--target-width', targetWidth);
-            bar.classList.add('animate');
-        });
-    }
-
-    validateField(field) {
-        const value = field.value.trim();
-        const fieldName = field.name;
-        let isValid = true;
-        let errorMessage = '';
-
-        // Clear previous states
-        this.clearFieldError(field);
-
-        switch (fieldName) {
-            case 'name':
-                if (value.length < 2) {
-                    isValid = false;
-                    errorMessage = 'Name must be at least 2 characters long';
-                }
-                break;
-            case 'email':
-                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if (!emailRegex.test(value)) {
-                    isValid = false;
-                    errorMessage = 'Please enter a valid email address';
-                }
-                break;
-            case 'subject':
-                if (value.length < 5) {
-                    isValid = false;
-                    errorMessage = 'Subject must be at least 5 characters long';
-                }
-                break;
-            case 'message':
-                if (value.length < 20) {
-                    isValid = false;
-                    errorMessage = 'Message must be at least 20 characters long';
-                }
-                break;
-        }
-
-        if (!isValid) {
-            this.showFieldError(field, errorMessage);
+        if (scrollPosition > heroHeight / 4) {
+          // Start blurring when scrolled 1/4 of hero height
+          const blurAmount =
+            Math.min((scrollPosition - heroHeight / 4) / (heroHeight / 2), 1) *
+            10; // Max blur 10px
+          if (heroContent) {
+            heroContent.style.filter = `blur(${blurAmount}px)`;
+            heroContent.style.opacity = `${1 - Math.min(blurAmount / 10, 0.7)}`; // Fade out content slightly
+          }
+          heroSection.classList.add("hero-blurred");
         } else {
-            this.showFieldSuccess(field);
+          if (heroContent) {
+            heroContent.style.filter = "blur(0px)";
+            heroContent.style.opacity = "1";
+          }
+          heroSection.classList.remove("hero-blurred");
+          // Reset parallax transform when de-blurred if needed
+          // heroSection.style.transform = `translateY(${window.pageYOffset * 0.5}px)`;
         }
+      }, 10)
+    );
+  }
 
-        return isValid;
-    }
+  toggleMobileMenu() {
+    const mobileMenu = document.querySelector(".mobile-menu");
+    const mobileMenuButton = document.querySelector(".mobile-menu-button");
 
-    showFieldError(field, message) {
-        field.classList.add('error');
-        field.classList.remove('success');
-        
-        const errorElement = field.parentNode.querySelector('.error-message');
-        if (errorElement) {
-            errorElement.textContent = message;
-            errorElement.classList.remove('hidden');
-        }
-    }
+    if (mobileMenu && mobileMenuButton) {
+      this.mobileMenuOpen = !this.mobileMenuOpen;
 
-    showFieldSuccess(field) {
-        field.classList.add('success');
-        field.classList.remove('error');
-        
-        const errorElement = field.parentNode.querySelector('.error-message');
-        if (errorElement) {
-            errorElement.classList.add('hidden');
-        }
-    }
-
-    clearFieldError(field) {
-        field.classList.remove('error');
-        
-        const errorElement = field.parentNode.querySelector('.error-message');
-        if (errorElement) {
-            errorElement.classList.add('hidden');
-        }
-    }
-
-    async handleFormSubmission(event) {
-        const form = event.target;
-        const formData = new FormData(form);
-        const button = form.querySelector('button[type="submit"]');
-        const buttonText = button.querySelector('.button-text');
-        const loadingSpinner = button.querySelector('.loading-spinner');
-        const messageDiv = document.getElementById('form-message');
-
-        // Validate all fields
-        const fields = form.querySelectorAll('input, textarea');
-        let isFormValid = true;
-        
-        fields.forEach(field => {
-            if (!this.validateField(field)) {
-                isFormValid = false;
-            }
+      if (this.mobileMenuOpen) {
+        mobileMenu.classList.remove("hidden");
+        mobileMenuButton.setAttribute("aria-expanded", "true");
+        // Animate menu items
+        const menuItems = mobileMenu.querySelectorAll("a");
+        menuItems.forEach((item, index) => {
+          item.style.opacity = "0";
+          item.style.transform = "translateY(-10px)";
+          setTimeout(() => {
+            item.style.transition = "opacity 0.3s ease, transform 0.3s ease";
+            item.style.opacity = "1";
+            item.style.transform = "translateY(0)";
+          }, index * 50);
         });
+      } else {
+        mobileMenu.classList.add("hidden");
+        mobileMenuButton.setAttribute("aria-expanded", "false");
+      }
+    }
+  }
 
-        if (!isFormValid) {
-            this.showFormMessage('Please fix the errors above', 'error');
-            return;
+  scrollToSection(sectionId) {
+    const section = document.getElementById(sectionId);
+    if (section) {
+      const headerHeight = document.querySelector("nav").offsetHeight;
+      const sectionTop = section.offsetTop - headerHeight;
+
+      window.scrollTo({
+        top: sectionTop,
+        behavior: "smooth",
+      });
+    }
+  }
+
+  handleScroll() {
+    const navbar = document.getElementById("navbar");
+    if (navbar) {
+      if (window.scrollY > 50) {
+        navbar.classList.add("bg-white/95");
+        navbar.classList.remove("bg-white/90");
+      } else {
+        navbar.classList.add("bg-white/90");
+        navbar.classList.remove("bg-white/95");
+      }
+    }
+  }
+
+  updateActiveNavigation(sectionId) {
+    if (this.currentSection !== sectionId) {
+      this.currentSection = sectionId;
+
+      // Update navigation links
+      const navLinks = document.querySelectorAll(".nav-link");
+      navLinks.forEach((link) => {
+        link.classList.remove("active");
+        if (link.getAttribute("href") === `#${sectionId}`) {
+          link.classList.add("active");
         }
+      });
+    }
+  }
 
-        // Show loading state
-        button.disabled = true;
-        buttonText.classList.add('hidden');
-        loadingSpinner.classList.remove('hidden');
+  animateSkillBars() {
+    const skillBars = document.querySelectorAll(".skill-bar");
+    skillBars.forEach((bar) => {
+      const targetWidth = bar.getAttribute("data-width") + "%";
+      bar.style.setProperty("--target-width", targetWidth);
+      bar.classList.add("animate");
+    });
+  }
 
-        try {
-            // Simulate form submission (replace with actual endpoint)
-            await this.simulateFormSubmission(formData);
-            
-            // Success
-            this.showFormMessage('Thank you! Your message has been sent successfully.', 'success');
-            form.reset();
-            
-            // Clear field states
-            fields.forEach(field => {
-                field.classList.remove('success', 'error');
-            });
-            
-        } catch (error) {
-            console.error('Form submission error:', error);
-            this.showFormMessage('Sorry, there was an error sending your message. Please try again.', 'error');
-        } finally {
-            // Reset button state
-            button.disabled = false;
-            buttonText.classList.remove('hidden');
-            loadingSpinner.classList.add('hidden');
+  validateField(field) {
+    const value = field.value.trim();
+    const fieldName = field.name;
+    let isValid = true;
+    let errorMessage = "";
+
+    // Clear previous states
+    this.clearFieldError(field);
+
+    switch (fieldName) {
+      case "name":
+        if (value.length < 2) {
+          isValid = false;
+          errorMessage = "Name must be at least 2 characters long";
         }
+        break;
+      case "email":
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(value)) {
+          isValid = false;
+          errorMessage = "Please enter a valid email address";
+        }
+        break;
+      case "subject":
+        if (value.length < 5) {
+          isValid = false;
+          errorMessage = "Subject must be at least 5 characters long";
+        }
+        break;
+      case "message":
+        if (value.length < 20) {
+          isValid = false;
+          errorMessage = "Message must be at least 20 characters long";
+        }
+        break;
     }
 
-    async simulateFormSubmission(formData) {
-        // Simulate network delay
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                // Simulate 90% success rate
-                if (Math.random() > 0.1) {
-                    resolve();
-                } else {
-                    reject(new Error('Network error'));
-                }
-            }, 2000);
-        });
+    if (!isValid) {
+      this.showFieldError(field, errorMessage);
+    } else {
+      this.showFieldSuccess(field);
     }
 
-    showFormMessage(message, type) {
-        const messageDiv = document.getElementById('form-message');
-        if (messageDiv) {
-            messageDiv.textContent = message;
-            messageDiv.className = `p-4 rounded-lg ${type === 'success' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`;
-            messageDiv.classList.remove('hidden');
-            
-            // Auto-hide after 5 seconds
-            setTimeout(() => {
-                messageDiv.classList.add('hidden');
-            }, 5000);
+    return isValid;
+  }
+
+  showFieldError(field, message) {
+    field.classList.add("error");
+    field.classList.remove("success");
+
+    const errorElement = field.parentNode.querySelector(".error-message");
+    if (errorElement) {
+      errorElement.textContent = message;
+      errorElement.classList.remove("hidden");
+    }
+  }
+
+  showFieldSuccess(field) {
+    field.classList.add("success");
+    field.classList.remove("error");
+
+    const errorElement = field.parentNode.querySelector(".error-message");
+    if (errorElement) {
+      errorElement.classList.add("hidden");
+    }
+  }
+
+  clearFieldError(field) {
+    field.classList.remove("error");
+
+    const errorElement = field.parentNode.querySelector(".error-message");
+    if (errorElement) {
+      errorElement.classList.add("hidden");
+    }
+  }
+
+  async handleFormSubmission(event) {
+    const form = event.target;
+    const formData = new FormData(form);
+    const button = form.querySelector('button[type="submit"]');
+    const buttonText = button.querySelector(".button-text");
+    const loadingSpinner = button.querySelector(".loading-spinner");
+    const messageDiv = document.getElementById("form-message");
+
+    // Validate all fields
+    const fields = form.querySelectorAll("input, textarea");
+    let isFormValid = true;
+
+    fields.forEach((field) => {
+      if (!this.validateField(field)) {
+        isFormValid = false;
+      }
+    });
+
+    if (!isFormValid) {
+      this.showFormMessage("Please fix the errors above", "error");
+      return;
+    }
+
+    // Show loading state
+    button.disabled = true;
+    buttonText.classList.add("hidden");
+    loadingSpinner.classList.remove("hidden");
+
+    try {
+      // Simulate form submission (replace with actual endpoint)
+      await this.simulateFormSubmission(formData);
+
+      // Success
+      this.showFormMessage(
+        "Thank you! Your message has been sent successfully.",
+        "success"
+      );
+      form.reset();
+
+      // Clear field states
+      fields.forEach((field) => {
+        field.classList.remove("success", "error");
+      });
+    } catch (error) {
+      console.error("Form submission error:", error);
+      this.showFormMessage(
+        "Sorry, there was an error sending your message. Please try again.",
+        "error"
+      );
+    } finally {
+      // Reset button state
+      button.disabled = false;
+      buttonText.classList.remove("hidden");
+      loadingSpinner.classList.add("hidden");
+    }
+  }
+
+  async simulateFormSubmission(formData) {
+    // Simulate network delay
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        // Simulate 90% success rate
+        if (Math.random() > 0.1) {
+          resolve();
+        } else {
+          reject(new Error("Network error"));
         }
-    }
+      }, 2000);
+    });
+  }
 
-    openProjectModal(projectId) {
-        const modal = document.getElementById('project-modal');
-        const modalTitle = document.getElementById('modal-title');
-        const modalContent = document.getElementById('modal-content');
-        
-        const project = this.projectData[projectId];
-        
-        if (modal && modalTitle && modalContent && project) {
-            modalTitle.textContent = project.title;
-            
-            modalContent.innerHTML = `
+  showFormMessage(message, type) {
+    const messageDiv = document.getElementById("form-message");
+    if (messageDiv) {
+      messageDiv.textContent = message;
+      messageDiv.className = `p-4 rounded-lg ${
+        type === "success"
+          ? "bg-green-100 text-green-800"
+          : "bg-red-100 text-red-800"
+      }`;
+      messageDiv.classList.remove("hidden");
+
+      // Auto-hide after 5 seconds
+      setTimeout(() => {
+        messageDiv.classList.add("hidden");
+      }, 5000);
+    }
+  }
+
+  openProjectModal(projectId) {
+    const modal = document.getElementById("project-modal");
+    const modalTitle = document.getElementById("modal-title");
+    const modalContent = document.getElementById("modal-content");
+
+    const project = this.projectData[projectId];
+
+    if (modal && modalTitle && modalContent && project) {
+      modalTitle.textContent = project.title;
+
+      modalContent.innerHTML = `
                 <div class="space-y-6">
-                    <p class="text-gray-600 leading-relaxed">${project.description}</p>
+                    <p class="text-gray-600 leading-relaxed">${
+                      project.description
+                    }</p>
                     
                     <div>
                         <h4 class="text-lg font-semibold text-gray-900 mb-3">Technologies Used</h4>
                         <div class="flex flex-wrap gap-2">
-                            ${project.technologies.map(tech => `
+                            ${project.technologies
+                              .map(
+                                (tech) => `
                                 <span class="px-3 py-1 bg-primary-100 text-primary-700 rounded-full text-sm">${tech}</span>
-                            `).join('')}
+                            `
+                              )
+                              .join("")}
                         </div>
                     </div>
                     
                     <div>
                         <h4 class="text-lg font-semibold text-gray-900 mb-3">Key Features</h4>
                         <ul class="space-y-2">
-                            ${project.features.map(feature => `
+                            ${project.features
+                              .map(
+                                (feature) => `
                                 <li class="flex items-start space-x-2">
                                     <svg class="w-5 h-5 text-primary-600 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
                                     </svg>
                                     <span class="text-gray-600">${feature}</span>
                                 </li>
-                            `).join('')}
+                            `
+                              )
+                              .join("")}
                         </ul>
                     </div>
                     
                     <div>
                         <h4 class="text-lg font-semibold text-gray-900 mb-3">Challenges & Solutions</h4>
-                        <p class="text-gray-600 leading-relaxed">${project.challenges}</p>
+                        <p class="text-gray-600 leading-relaxed">${
+                          project.challenges
+                        }</p>
                     </div>
                     
                     <div>
                         <h4 class="text-lg font-semibold text-gray-900 mb-3">Results</h4>
-                        <p class="text-gray-600 leading-relaxed">${project.outcome}</p>
+                        <p class="text-gray-600 leading-relaxed">${
+                          project.outcome
+                        }</p>
                     </div>
                 </div>
             `;
-            
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
-            document.body.style.overflow = 'hidden';
-            
-            // Focus management for accessibility
-            modalTitle.focus();
-        }
-    }
 
-    closeProjectModal() {
-        const modal = document.getElementById('project-modal');
-        if (modal) {
-            modal.classList.add('hidden');
-            modal.classList.remove('flex');
-            document.body.style.overflow = '';
-        }
-    }
+      modal.classList.remove("hidden");
+      modal.classList.add("flex");
+      document.body.style.overflow = "hidden";
 
-    debounce(func, wait) {
-        let timeout;
-        return function executedFunction(...args) {
-            const later = () => {
-                clearTimeout(timeout);
-                func(...args);
-            };
-            clearTimeout(timeout);
-            timeout = setTimeout(later, wait);
-        };
+      // Focus management for accessibility
+      modalTitle.focus();
     }
+  }
+
+  closeProjectModal() {
+    const modal = document.getElementById("project-modal");
+    if (modal) {
+      modal.classList.add("hidden");
+      modal.classList.remove("flex");
+      document.body.style.overflow = "";
+    }
+  }
+
+  debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+      const later = () => {
+        clearTimeout(timeout);
+        func(...args);
+      };
+      clearTimeout(timeout);
+      timeout = setTimeout(later, wait);
+    };
+  }
 }
 
 // Initialize the application when DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-    new PortfolioApp();
+document.addEventListener("DOMContentLoaded", () => {
+  new PortfolioApp();
 });
 
 // Service Worker Registration for PWA (optional)
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js')
-            .then((registration) => {
-                console.log('SW registered: ', registration);
-            })
-            .catch((registrationError) => {
-                console.log('SW registration failed: ', registrationError);
-            });
-    });
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker
+      .register("/sw.js")
+      .then((registration) => {
+        console.log("SW registered: ", registration);
+      })
+      .catch((registrationError) => {
+        console.log("SW registration failed: ", registrationError);
+      });
+  });
 }
 
 // Performance monitoring
-if ('PerformanceObserver' in window) {
-    const observer = new PerformanceObserver((list) => {
-        list.getEntries().forEach((entry) => {
-            if (entry.entryType === 'largest-contentful-paint') {
-                console.log('LCP:', entry.startTime);
-            }
-        });
+if ("PerformanceObserver" in window) {
+  const observer = new PerformanceObserver((list) => {
+    list.getEntries().forEach((entry) => {
+      if (entry.entryType === "largest-contentful-paint") {
+        console.log("LCP:", entry.startTime);
+      }
     });
-    
-    observer.observe({ entryTypes: ['largest-contentful-paint'] });
+  });
+
+  observer.observe({ entryTypes: ["largest-contentful-paint"] });
 }

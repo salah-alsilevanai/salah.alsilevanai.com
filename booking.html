@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Book a Meeting – Salah Alsilevanai</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="./assets/icons/favicon.svg" />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body
+    class="bg-white font-inter min-h-screen flex items-center justify-center"
+  >
+    <div class="bg-white shadow-lg rounded-xl p-8 max-w-md w-full">
+      <h1 class="text-2xl font-bold mb-6 text-gray-900 text-center">
+        Book a Meeting
+      </h1>
+      <form id="booking-form" class="space-y-6">
+        <div>
+          <label for="date" class="block text-gray-700 font-medium mb-2"
+            >Select a Date</label
+          >
+          <input
+            type="date"
+            id="date"
+            name="date"
+            class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-600"
+            required
+          />
+        </div>
+        <button
+          type="button"
+          id="whatsapp-btn"
+          class="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-3 rounded-lg transition-all duration-300 flex items-center justify-center space-x-2"
+        >
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+            <path
+              d="M20.52 3.48A12 12 0 003.48 20.52l-1.32 4.84a1 1 0 001.22 1.22l4.84-1.32A12 12 0 1020.52 3.48zM12 22a10 10 0 01-5.29-1.47l-.38-.23-2.87.78.77-2.87-.23-.38A10 10 0 1122 12zm4.29-7.71l-2.12-2.12a1 1 0 00-1.41 0l-.71.71a1 1 0 01-1.41 0l-2.12-2.12a1 1 0 010-1.41l.71-.71a1 1 0 000-1.41l-2.12-2.12a1 1 0 00-1.41 0l-.71.71a1 1 0 000 1.41l2.12 2.12a1 1 0 010 1.41l-.71.71a1 1 0 000 1.41l2.12 2.12a1 1 0 001.41 0l.71-.71a1 1 0 011.41 0l2.12 2.12a1 1 0 000 1.41l-.71.71a1 1 0 000 1.41l2.12 2.12a1 1 0 001.41 0l.71-.71a1 1 0 000-1.41z"
+            />
+          </svg>
+          <span>Chat on WhatsApp</span>
+        </button>
+      </form>
+    </div>
+    <script>
+      document.getElementById("whatsapp-btn").onclick = function () {
+        const date = document.getElementById("date").value;
+        if (!date) {
+          alert("Please select a date.");
+          return;
+        }
+        const formatted = new Date(date).toLocaleDateString();
+        const msg = encodeURIComponent(
+          `Hello Salah, I would like to book a meeting on ${formatted}.`
+        );
+        window.open(`https://wa.me/9647518459670?text=${msg}`, "_blank");
+      };
+    </script>
+  </body>
+</html>
